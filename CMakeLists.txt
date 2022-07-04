@@ -21,8 +21,8 @@ if( APPLE AND NOT XCODE )
 	set( CMAKE_CXX_FLAGS "-ObjC++" )
 endif()
 
-option( BGFX_BUILD_TOOLS      "Build bgfx tools."                             ON  )
-option( BGFX_BUILD_EXAMPLES   "Build bgfx examples."                          ON  )
+option( BGFX_BUILD_TOOLS      "Build bgfx tools."                             OFF  )
+option( BGFX_BUILD_EXAMPLES   "Build bgfx examples."                          OFF  )
 option( BGFX_INSTALL          "Create installation target."                   ON  )
 option( BGFX_INSTALL_EXAMPLES "Install examples and their runtimes."          OFF )
 option( BGFX_CUSTOM_TARGETS   "Include convenience custom targets."           ON  )
@@ -34,7 +34,7 @@ option( BGFX_CONFIG_MULTITHREADED      "Enable multithread."                  ON
 
 set( BGFX_OPENGL_VERSION   ""       CACHE STRING "Specify minimum opengl version" )
 set( BGFX_OPENGLES_VERSION ""       CACHE STRING "Specify minimum OpenGL ES version" )
-set( BGFX_LIBRARY_TYPE     "STATIC" CACHE STRING "Linking type for library" )
+set( BGFX_LIBRARY_TYPE     "SHARED" CACHE STRING "Linking type for library" )
 
 set_property( CACHE BGFX_LIBRARY_TYPE PROPERTY STRINGS STATIC SHARED )
 
@@ -201,3 +201,9 @@ if( BGFX_INSTALL )
 		DESTINATION "${config_install_dir}"
 	)
 endif()
+
+if(MSVC)
+	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++14 /Zc:__cplusplus" CACHE STRING "compile flags" FORCE)
+endif()
+
+add_compile_definitions(BX_CONFIG_DEBUG=0)
