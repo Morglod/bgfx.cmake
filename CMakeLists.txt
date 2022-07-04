@@ -34,7 +34,7 @@ option( BGFX_CONFIG_MULTITHREADED      "Enable multithread."                  ON
 
 set( BGFX_OPENGL_VERSION   ""       CACHE STRING "Specify minimum opengl version" )
 set( BGFX_OPENGLES_VERSION ""       CACHE STRING "Specify minimum OpenGL ES version" )
-set( BGFX_LIBRARY_TYPE     "SHARED" CACHE STRING "Linking type for library" )
+set( BGFX_LIBRARY_TYPE     "STATIC" CACHE STRING "Linking type for library" )
 
 set_property( CACHE BGFX_LIBRARY_TYPE PROPERTY STRINGS STATIC SHARED )
 
