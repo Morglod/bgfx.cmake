@@ -55,4 +55,18 @@ else()
 	endif()
 endif()
 
+
+if( ${CMAKE_SYSTEM_NAME} MATCHES iOS|tvOS )
+	target_link_libraries (spirv-tools PUBLIC "-framework OpenGLES  -framework Metal -framework UIKit -framework CoreFoundation -framework CoreGraphics -framework QuartzCore")
+elseif( APPLE )
+	find_library( COCOA_LIBRARY Cocoa )
+	find_library( METAL_LIBRARY Metal )
+	find_library( QUARTZCORE_LIBRARY QuartzCore )
+	mark_as_advanced( COCOA_LIBRARY )
+	mark_as_advanced( METAL_LIBRARY )
+	mark_as_advanced( QUARTZCORE_LIBRARY )
+	target_link_libraries( spirv-tools PUBLIC ${COCOA_LIBRARY} ${METAL_LIBRARY} ${QUARTZCORE_LIBRARY} )
+	target_link_libraries( spirv-tools PUBLIC "-framework CoreFoundation" )
+endif()
+
 set_target_properties( spirv-tools PROPERTIES FOLDER "bgfx/3rdparty" )

@@ -10,9 +10,22 @@
 
 add_executable( geometryv ${BGFX_DIR}/tools/geometryv/geometryv.cpp )
 set_target_properties( geometryv PROPERTIES FOLDER "bgfx/tools" )
-target_link_libraries( geometryv example-common )
+target_link_libraries( geometryv PUBLIC example-common )
 if( BGFX_CUSTOM_TARGETS )
 	add_dependencies( tools geometryv )
+endif()
+
+if( ${CMAKE_SYSTEM_NAME} MATCHES iOS|tvOS )
+	target_link_libraries (geometryv PUBLIC "-framework OpenGLES  -framework Metal -framework UIKit -framework CoreFoundation -framework CoreGraphics -framework QuartzCore")
+elseif( APPLE )
+	find_library( COCOA_LIBRARY Cocoa )
+	find_library( METAL_LIBRARY Metal )
+	find_library( QUARTZCORE_LIBRARY QuartzCore )
+	mark_as_advanced( COCOA_LIBRARY )
+	mark_as_advanced( METAL_LIBRARY )
+	mark_as_advanced( QUARTZCORE_LIBRARY )
+	target_link_libraries( geometryv PUBLIC ${COCOA_LIBRARY} ${METAL_LIBRARY} ${QUARTZCORE_LIBRARY} )
+	target_link_libraries( geometryv PUBLIC "-framework IOKit -framework CoreFoundation" )
 endif()
 
 if (IOS)

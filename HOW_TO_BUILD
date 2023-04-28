@@ -1,0 +1,7 @@
+mkdir build
+cd build
+cmake ..
+cmake --build ./ -j=8
+# because of wtf in build script
+echo "// WTF" >> ../bgfx/examples/common/bounds.cpp
+cmake --build ./ -j=8
